@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+ <title>NameImput</title>
+ <meta charset="UTF-8" />  
+ 
+ <script
+crossorigin
+src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script
+crossorigin
+src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script
+crossorigin
+src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="nameImputContainer"></div>
+    <script type="text/babel">
+        const NameImput = () =>{
+            const[name,setName] = React.useState("〇〇");
+
+            const handleOnChange = (event) => setName(event.target.value);
+
+            return(
+                <div>
+                    <input type="text" onChange={handleOnChange} />
+                    <p>こんにちは、{name}さん</p>
+                    </div>
+            );
+        };
+        const domContainer = document.querySelector("#nameImputContainer")
+
+        ReactDOM.render(<NameImput />, domContainer);
+    </script>
+
+</body>
+
+</html>
