@@ -2,7 +2,8 @@ import React, { Component, useState, ReactDom } from 'react';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import '../Calendar.css';
-import Modal from './modal';
+import OpenModal from './modal';
+import BasicUsage from './ModalComponent';
 
 //試合結果のデータ取得用URL
 const url = "https://api.football-data.org/v2/teams/66/matches/"
@@ -34,6 +35,16 @@ const changeJSTDate = (date) => {
     return `${year}${month}${day}`;
 }
 
+//JST表示をyyyy-MM-dd HH:mm表示に変換
+const changeJSTToDate = (date) => {
+    const newDate = new Date(date)//中身は「Wed Aug 11 2021 22:38:05 GMT+0900 (GMT+09:00)
+    const year = newDate.getFullYear()//「2021」が代入される
+    const month = ("0" + (newDate.getMonth() + 1)).slice(-2) //「8」が代入される(getMonthだと1月分少なくなって返ってくるので+1する)
+    const day = ("0" + newDate.getDate()).slice(-2)//「11」が代入される
+    const hour = (`0` + (newDate.getHours())).slice(-2)//「22」が代入される
+    const minute = (`0` + (newDate.getMinutes())).slice(-2)//「38」が代入される
+    return `${year}-${month}-${day} ${hour}:${minute}`;
+}
 
 export default class CalendarComponent extends Component {
 
@@ -51,7 +62,7 @@ export default class CalendarComponent extends Component {
     //日にちを選択したときの処理
     clickHandler(value,event) {
         const date = changeJSTDate(value) //選択した日付をyyyyMMddに変換
-        this.setState({value:date})　//変換した日付をstateにセットし、更新
+        this.setState({value:date})//変換した日付をstateにセットし、更新
         //試合結果が存在する日付のときだけmodalを開くようにする
         if(this.state.month_item[date]){
             this.setState({ show: true });
@@ -83,7 +94,9 @@ export default class CalendarComponent extends Component {
                     listMap.set("text", match.homeTeam.id == myTeamId ? "home" : "away");//homeかawayを判定
                     listMap.set("logo", url);
                     listMap.set("competition", match.competition.id);
+                    listMap.set("competitionName", match.competition.name);
                     listMap.set("score",match.score.fullTime)
+                    listMap.set("kickOff",changeJSTToDate(match.utcDate))
                     //「日付:試合情報」の形式でセット
                     matchMap.set(changeJSTDate(match.utcDate), listMap)
                 })
@@ -124,7 +137,7 @@ export default class CalendarComponent extends Component {
                 <img src={myTeamUrl} width="50" height="50" /> {/* 自チームのロゴ表示  */} 
                 2021-2022 schedules
                 {/* modal.jsxへ要素受け渡し  */} 
-                <Modal 
+                <OpenModal 
                 show={this.state.show} 
                 closeShow={this.closeShow.bind(this)} 
                 state={this.state.month_item} 
@@ -137,6 +150,7 @@ export default class CalendarComponent extends Component {
                     onClickDay={this.clickHandler.bind(this)} //日にちを選択したとき
                     tileContent={this.getTileContent.bind(this)} //カレンダーの日にちに書き込む
                 />
+                <BasicUsage />
             </div>
         )
     }

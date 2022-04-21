@@ -25,12 +25,12 @@ ReactDOM.render(
     {/* <Counter /> */}
     {/* TODOアプリを動かすときは以下をコメントイン */}
     {/* <ChakraProvider theme={theme}>
-    <App />
-    </ChakraProvider> */}
+    <App /> */}
+    {/* </ChakraProvider> */}
     {/* <HelloWorld /> */}
     {/* 試合予定をみたいとき以下コメントイン */}
     {/* <App /> */}
-    <MyApp />
+     <MyApp />
   </React.StrictMode>,
   rootElement
 );
