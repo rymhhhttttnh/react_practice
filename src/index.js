@@ -5,7 +5,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 // import Counter from './component/test';
 // import App from './component/appComponent';
-// import {ChakraProvider} from "@chakra-ui/react";
+import {ChakraProvider} from "@chakra-ui/react";
 // import theme from "./theme/theme"
 // import HelloWorld from "./example/HelloWorld"
 // import App from "./example/App"
@@ -30,7 +30,9 @@ ReactDOM.render(
     {/* <HelloWorld /> */}
     {/* 試合予定をみたいとき以下コメントイン */}
     {/* <App /> */}
+    <ChakraProvider >
      <MyApp />
+    </ChakraProvider>
   </React.StrictMode>,
   rootElement
 );

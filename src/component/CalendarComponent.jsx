@@ -4,6 +4,9 @@ import moment from 'moment';
 import '../Calendar.css';
 import OpenModal from './modal';
 import BasicUsage from './ModalComponent';
+import{
+    Text
+} from '@chakra-ui/react'
 
 //試合結果のデータ取得用URL
 const url = "https://api.football-data.org/v2/teams/66/matches/"
@@ -95,6 +98,7 @@ export default class CalendarComponent extends Component {
                     listMap.set("logo", url);
                     listMap.set("competition", match.competition.id);
                     listMap.set("competitionName", match.competition.name);
+                    listMap.set("matchDay",match.matchday)
                     listMap.set("score",match.score.fullTime)
                     listMap.set("kickOff",changeJSTToDate(match.utcDate))
                     //「日付:試合情報」の形式でセット
@@ -124,7 +128,7 @@ export default class CalendarComponent extends Component {
             return this.state.month_item[targetDate] && this.state.month_item[targetDate].text ?
                 <div>
                     <p>{this.state.month_item[targetDate].text}</p>
-                    <p><img src={this.state.month_item[targetDate].logo} width="30" height="30" /></p>
+                    <p><img src={this.state.month_item[targetDate].logo} width="50" height="50" id = "center"/></p>
                 </div>
                 : null
         }
@@ -134,8 +138,10 @@ export default class CalendarComponent extends Component {
     render() {
         return (
             <div>
-                <img src={myTeamUrl} width="50" height="50" /> {/* 自チームのロゴ表示  */} 
-                2021-2022 schedules
+                <img src={myTeamUrl} width="80" height="80" /> {/* 自チームのロゴ表示  */} 
+                <Text fontSize="32"
+                    fontWeight="extrabold"
+                    textAlign="center">2021-2022 schedules</Text>
                 {/* modal.jsxへ要素受け渡し  */} 
                 <OpenModal 
                 show={this.state.show} 

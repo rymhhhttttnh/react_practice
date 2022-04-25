@@ -1,0 +1,13 @@
+herokuのＵＩ画面でのデプロイが使えないため、herokuCLIでデプロイを行う
+
+※herokuのデプロイするリポジトリとgithubのリポジトリは別
+
+◇githubにpushするとき
+.git/configを開き、remote=originのコメントイン
+remote=herokuをコメントアウト
+
+◇herokuにデプロイ
+.git/configを開き、remote=originのコメントアウト
+remote=herokuをコメントアウトイン
+
+ｆｏｒｋでプッシュ

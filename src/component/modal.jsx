@@ -2,15 +2,16 @@ import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
 import React from "react";
 import '../modal.css'
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button
+  Button,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
 } from '@chakra-ui/react'
+
 
 //ホームチームの試合情報をセット
 function setHomeData(match, props) {
@@ -48,45 +49,38 @@ const OpenModal = (props) => {
   const match = props.state[props.value]
   const homeData = setHomeData(match, props);
   const awayData = setAwayData(match, props);
-  
+
   return (
     <>
       {
         props.show ? (
           <>
-            {/* <Modal> */}
-              {/* <ModalOverlay /> */}
-              {/* <ModalContent> */}
-                {/* <ModalBody> */}
                   <div id="overlay">
                     <div id="modalContent">
-                      <table>
-                        <tr>
-                          <th></th>
-                          <td><img src={homeData.get("homeUrl")} width="30" height="30" /></td>
-                          <td><img src={awayData.get("awayUrl")} width="30" height="30" /></td>
-                        </tr>
-                        <tr>
-                          <th>competition:</th>
-                          <td>{match.competitionName}</td>
-                        </tr>
-                        <tr>
-                          <th>キックオフ:</th>
-                          <td>{match.kickOff}</td>
-                        </tr>
-                        <tr>
-                          <th>score</th>
-                          <td>{homeData.get("score")}</td>
-                          <td>{awayData.get("score")}</td>
-                        </tr>
-                      </table>
-                      <Button onClick={props.closeShow} colorScheme="blue">Close</Button>
+                    <Button onClick={props.closeShow} class="margin-button">✖</Button>
+                      <Table>
+                        <Tr>
+                          <Th></Th>
+                          <Td><img src={homeData.get("homeUrl")} width="50" height="50" /></Td>
+                          <Td><img src={awayData.get("awayUrl")} width="50" height="50" /></Td>
+                        </Tr>
+                        <Tr>
+                          <Th>competition</Th>
+                          <Td>{match.competition == 2021 ? match.competitionName + "第" + match.matchDay + "節"
+                           : match.competitionName}</Td>
+                        </Tr>
+                        <Tr>
+                          <Th>キックオフ</Th>
+                          <Td>{match.kickOff}</Td>
+                        </Tr>
+                        <Tr>
+                          <Th>score</Th>
+                          <Td>{homeData.get("score")}</Td>
+                          <Td>{awayData.get("score")}</Td>
+                        </Tr>
+                      </Table>
                       </div>
                     </div>
-                    {/* </ModalBody> */}
-                    {/* <ModalCloseButton /> */}
-              {/* </ModalContent> */}
-            {/* </Modal> */}
           </>
         ) : (
           <></>
