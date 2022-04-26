@@ -18,6 +18,7 @@ const config = {
 
 //Manchester UnitedのチームIDとロゴ画像を取得するURL
 const myTeamId = "66";
+const myTeamName = "Manchester United FC";
 const myTeamUrl = "https://crests.football-data.org/" + myTeamId + ".svg";
 
 //mapをjsonへと変換
@@ -95,6 +96,7 @@ export default class CalendarComponent extends Component {
 
                     //それぞれ試合情報をセットする
                     listMap.set("text", match.homeTeam.id == myTeamId ? "home" : "away");//homeかawayを判定
+                    listMap.set("opponent",match.homeTeam.id == myTeamId ? match.awayTeam.name  : match.homeTeam.name)
                     listMap.set("logo", url);
                     listMap.set("competition", match.competition.id);
                     listMap.set("competitionName", match.competition.name);
@@ -127,7 +129,7 @@ export default class CalendarComponent extends Component {
             //targetDateとmonth_item内の日付と一致するデータの中からhomeかaway、対戦チームのロゴ画像を表示
             return this.state.month_item[targetDate] && this.state.month_item[targetDate].text ?
                 <div>
-                    <p>{this.state.month_item[targetDate].text}</p>
+                    <Text as='i' color='gray.500'>{this.state.month_item[targetDate].text}</Text><br /><br />
                     <p><img src={this.state.month_item[targetDate].logo} width="50" height="50" id = "center"/></p>
                 </div>
                 : null
@@ -148,7 +150,8 @@ export default class CalendarComponent extends Component {
                 closeShow={this.closeShow.bind(this)} 
                 state={this.state.month_item} 
                 value={this.state.value}
-                url={myTeamUrl}/> 
+                url={myTeamUrl}
+                name={myTeamName}/> 
                 <Calendar
                     locale="en-US"
                     calendarType={"US"}

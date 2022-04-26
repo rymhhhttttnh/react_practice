@@ -1,12 +1,8 @@
-import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
 import React from "react";
 import '../modal.css'
 import {
   Button,
   Table,
-  Thead,
-  Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -19,8 +15,10 @@ function setHomeData(match, props) {
   if (match) {
     if (match.text == 'home') {
       homeData.set("homeUrl", props.url)
+      homeData.set("homeTeamName",props.name)
     } else {
       homeData.set("homeUrl", match.logo)
+      homeData.set("homeTeamName",match.opponent)
     }
     homeData.set("score", match.score.homeTeam === null ? "-" : match.score.homeTeam)
     return homeData
@@ -35,8 +33,10 @@ function setAwayData(match, props) {
   if (match) {
     if (match.text == 'away') {
       awayData.set("awayUrl", props.url)
+      awayData.set("awayTeamName",props.name)
     } else {
       awayData.set("awayUrl", match.logo)
+      awayData.set("awayTeamName",match.opponent)
     }
     awayData.set("score", match.score.awayTeam === null ? "-" : match.score.awayTeam)
     return awayData
@@ -50,6 +50,8 @@ const OpenModal = (props) => {
   const homeData = setHomeData(match, props);
   const awayData = setAwayData(match, props);
 
+  console.log(homeData)
+
   return (
     <>
       {
@@ -61,8 +63,10 @@ const OpenModal = (props) => {
                       <Table>
                         <Tr>
                           <Th></Th>
-                          <Td><img src={homeData.get("homeUrl")} width="50" height="50" /></Td>
-                          <Td><img src={awayData.get("awayUrl")} width="50" height="50" /></Td>
+                          <Td><img src={homeData.get("homeUrl")} width="50" height="50" /><br />
+                          {homeData.get("homeTeamName")}</Td>
+                          <Td><img src={awayData.get("awayUrl")} width="50" height="50" /><br />
+                          {awayData.get("awayTeamName")}</Td>
                         </Tr>
                         <Tr>
                           <Th>competition</Th>
