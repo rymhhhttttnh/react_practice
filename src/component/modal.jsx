@@ -50,8 +50,6 @@ const OpenModal = (props) => {
   const homeData = setHomeData(match, props);
   const awayData = setAwayData(match, props);
 
-  console.log(homeData)
-
   return (
     <>
       {
@@ -62,7 +60,7 @@ const OpenModal = (props) => {
                     <Button onClick={props.closeShow} class="margin-button">✖</Button>
                       <Table>
                         <Tr>
-                          <Th></Th>
+                          <Th><img src={match.competitionLogo} width="60" height="60"/></Th>
                           <Td><img src={homeData.get("homeUrl")} width="50" height="50" /><br />
                           {homeData.get("homeTeamName")}</Td>
                           <Td><img src={awayData.get("awayUrl")} width="50" height="50" /><br />

@@ -12,14 +12,20 @@ import{
 const url = "https://api.football-data.org/v2/teams/66/matches/"
 const config = {
     headers: {
-        'X-Auth-Token': 'a4fac023ffb841cd9bb0e7cd38581145',
+        'X-Auth-Token': process.env.React_APP_dataFootball_API_KEY,
     }
 }
 
-//Manchester UnitedのチームIDとロゴ画像を取得するURL
+//Manchester UnitedのチームID、チーム名とロゴ画像を取得するURL
 const myTeamId = "66";
 const myTeamName = "Manchester United FC";
 const myTeamUrl = "https://crests.football-data.org/" + myTeamId + ".svg";
+
+//プレミアリーグのエンブレム用URLとID
+const emblemURLPL = "https://crests.football-data.org/PL.png"
+const PLId = "2021"
+//チャンピオンズリーグのエンブレム用URL
+const emblemURLCL = "https://crests.football-data.org/CL.png"
 
 //mapをjsonへと変換
 function replacer(key, value) {
@@ -99,6 +105,8 @@ export default class CalendarComponent extends Component {
                     listMap.set("opponent",match.homeTeam.id == myTeamId ? match.awayTeam.name  : match.homeTeam.name)
                     listMap.set("logo", url);
                     listMap.set("competition", match.competition.id);
+                    listMap.set("competitionLogo", match.competition.id == PLId ? 
+                    emblemURLPL : emblemURLCL);
                     listMap.set("competitionName", match.competition.name);
                     listMap.set("matchDay",match.matchday)
                     listMap.set("score",match.score.fullTime)
@@ -129,10 +137,14 @@ export default class CalendarComponent extends Component {
             //targetDateとmonth_item内の日付と一致するデータの中からhomeかaway、対戦チームのロゴ画像を表示
             return this.state.month_item[targetDate] && this.state.month_item[targetDate].text ?
                 <div>
-                    <Text as='i' color='gray.500'>{this.state.month_item[targetDate].text}</Text><br /><br />
-                    <p><img src={this.state.month_item[targetDate].logo} width="50" height="50" id = "center"/></p>
+                    
+                    <img src={this.state.month_item[targetDate].competitionLogo} width="50" height="50" class="margin-left-30"/> 
+                    <Text as='i' color='gray.500'>{this.state.month_item[targetDate].text}</Text>
+                    <img src={this.state.month_item[targetDate].logo} width="50" height="50" id = "center"/>
+                
+                    
                 </div>
-                : null
+                : <div class="dummy"></div>
         }
     }
 
@@ -140,7 +152,8 @@ export default class CalendarComponent extends Component {
     render() {
         return (
             <div>
-                <img src={myTeamUrl} width="80" height="80" /> {/* 自チームのロゴ表示  */} 
+                <img src={myTeamUrl} width="80" height="80" id="center"/> {/* 自チームのロゴ表示  */} 
+                <Text textAlign="center">{myTeamName}</Text>
                 <Text fontSize="32"
                     fontWeight="extrabold"
                     textAlign="center">2021-2022 schedules</Text>

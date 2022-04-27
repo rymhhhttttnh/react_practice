@@ -10,4 +10,6 @@ remote=herokuをコメントアウト
 .git/configを開き、remote=originのコメントアウト
 remote=herokuをコメントアウトイン
 
-ｆｏｒｋでプッシュ
+herokuにｆｏｒｋでプッシュするとビルドエラーとなるため、ＣＬＩでデプロイ
+コマンド→
+git push heroku main
